@@ -19,7 +19,10 @@ class OrderExistProvider extends ServiceProvider {
         const end_date = moment().format('YYYY-MM-DD') + ' 00:00:00'
         const start_date = moment().subtract(7,'d').format('YYYY-MM-DD') + ' 00:00:00'
 
-        const orders = await Order.query().with('products').whereBetween('created_at', [start_date, end_date]).fetch()
+        const orders = await Order.query().with('products').whereBetween(
+			'created_at',
+			[start_date, end_date]
+		).where('client_no', personId).fetch()
 
         const ordersObj = orders.toJSON()
 
