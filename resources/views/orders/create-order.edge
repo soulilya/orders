@@ -1,0 +1,71 @@
+@layout('layouts/master')
+@section('content')
+<div class="container">
+    <div class="row">
+      <div class="col-md-3"></div>
+      <div class="col-md-6 shadow bg-white mt-5 rounded p-3">
+      <div class="clear-fix"></div>
+      <form method="POST" action="{{route('store.order')}}">
+        {{ csrfField() }}
+          <div>
+            @if(flashMessage('successmessage'))
+              <span class="alert alert-success p-1">{{ flashMessage('successmessage') }}</span>
+            @endif
+          </div>
+          <div class="form-group">
+            <label for="client_no">Идентификатор клиента</label>
+            <input type="client_no" class="form-control" id="client_no" name="client_no" value="{{old('client_no','')}}"  placeholder="123456">
+            {{ elIf('<span>$self</span>', getErrorFor('client_no'), hasErrorFor('client_no')) }}
+          </div>
+
+          <div class="form-group">
+            <label for="first_name">Имя клиента</label>
+            <input type="first_name" class="form-control" id="first_name" name="first_name" value="{{old('first_name','')}}"  placeholder="Иван">
+            {{ elIf('<span class=text-danger>$self</span>', getErrorFor('first_name'), hasErrorFor('first_name')) }}
+          </div>
+
+          <div class="form-group">
+            <label for="last_name">Фамилия клиента</label>
+            <input type="last_name" class="form-control" id="last_name" name="last_name" value="{{old('last_name','')}}"  placeholder="Петров">
+            {{ elIf('<span class=text-danger>$self</span>', getErrorFor('last_name'), hasErrorFor('last_name')) }}
+          </div>
+
+          <div class="form-group">
+            <label for="post_code">Индекс</label>
+            <input type="post_code" class="form-control" id="post_code" name="post_code" value="{{old('post_code','')}}"  placeholder="111111">
+          </div>
+
+          <table id="products">
+              <tr>
+                  <th>Название товара</th>
+                  <th>Количество</th>
+                  <th>Действие</th>
+              </tr>
+              <tr class="inputRow">
+                  <td>
+                      <select class="form-control" class="products" name="products">
+                          <option selected>Выберете товар</option>
+                          @each(product in products)  
+                              <option value="{{ product.id }}">{{ product.product_name }}</option>
+                          @else  
+                              <option>Нет товаров</option>
+                          @endeach
+                      </select>
+                      {{ elIf('<span class=text-danger>$self</span>', getErrorFor('post_code'), hasErrorFor('post_code')) }}
+                    </td>
+                  <td>
+                      <input type="number" class="form-control" class="quantity" name="quantity" value="0"  placeholder="1">
+                      {{ elIf('<span class=text-danger>$self</span>', getErrorFor('quantity'), hasErrorFor('quantity')) }}
+                  </td>
+                  <td><input type="button" class="btn btn-danger" onclick="removeRow(this)" value="Удалить"></td>
+              </tr>
+          </table>
+          <input type="button" class="btn" value="Добавить товар" onclick="addRow()">
+          <div class="text-center">
+            <button type="submit" class="btn btn-primary">Сохранить</button>
+          </div>
+      </form>
+  </div>
+</div>
+{{ script('order-products') }}
+@endsection

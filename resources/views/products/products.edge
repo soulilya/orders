@@ -1,0 +1,38 @@
+@layout('layouts/master')
+@section('content')
+<div class="container">
+    <div class="row">
+        <div class="col-md-8 offset-md-3">
+            <div class="text-black">
+                <div class="card-body">
+                    <div class="text-right">
+                        <a href="{{route('create.product')}}" class="btn btn-outline-primary">Создать товар</a>
+                    </div>
+                    <br>
+                    <div class="clear-fix"></div>
+                        <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Наименование товара</th>
+                                <th scope="col"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @each(product in products)  
+                                <tr>
+                                    <th><a href="/edit-product/{{ product.id }}">{{ product.product_name }}</a></th>
+                                    <th><a class="btn btn-outline-danger" href="/delete-product/{{ product.id }}">Удалить</a></th>
+                                </tr>
+                            @else  
+                                <tr>
+                                    <th>Товаров нет</th>
+                                </tr>
+                            @endeach
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@endsection

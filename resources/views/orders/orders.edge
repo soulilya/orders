@@ -1,0 +1,33 @@
+@layout('layouts/master')
+@section('content')
+<div class="container">
+    <div class="row">
+        <div class="col-md-8 offset-md-3">
+            <div class="text-black">
+                    <div class="clear-fix"></div>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Имя клиента</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @each(order in orders)  
+                                <tr>
+                                    <th><a href="/edit-order/{{ order.id }}">{{ order.first_name }} {{ order.last_name }}</a></th>
+                                    <th><a class="btn btn-outline-danger" href="/delete-order/{{ order.id }}">Удалить</a></th>
+                                </tr>
+                            @else  
+                                <tr>
+                                    <th>Заказов нет</th>
+                                </tr>
+                            @endeach
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@endsection
